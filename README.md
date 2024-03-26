@@ -1,14 +1,11 @@
-# @react-native-community/image-editor
-
-[![Build Status][build-badge]][build]
-[![Version][version-badge]][package]
-[![MIT License][license-badge]][license]
-[![PRs Welcome][prs-welcome-badge]][prs-welcome]
-[![Lean Core Badge][lean-core-badge]][lean-core-issue]
+# react-native-image-editor
 
 Image Editor Native module for React Native.
 
-Originally extracted from React Native [`issue#23313`](https://github.com/facebook/react-native/issues/23313) and maintained by the community.
+[![Build Status][build-badge]][build]
+[![MIT License][license-badge]][license]
+[![PRs Welcome][prs-welcome-badge]][prs-welcome]
+[![Lean Core Badge][lean-core-badge]][lean-core-issue]
 
 ## Getting started
 
@@ -38,41 +35,38 @@ import ImageEditor from '@react-native-community/image-editor';
 
 Crop the image specified by the URI param. If URI points to a remote image, it will be downloaded automatically. If the image cannot be loaded/downloaded, the promise will be rejected.
 
-If the cropping process is successful, the resultant cropped image will be stored in the cache path, and the [`CropResult`](#result-cropresult) returned in the promise will point to the image in the cache path. ⚠️ Remember to delete the cropped image from the cache path when you are done with it.
+If the cropping process is successful, the resultant cropped image will be stored in the cache path, and the URI returned in the promise will point to the image in the cache path. Remember to delete the cropped image from the cache path when you are done with it.
 
 ```ts
-ImageEditor.cropImage(uri, cropData).then((result) => {
-  console.log('Cropped image uri:', result.uri);
+ImageEditor.cropImage(uri, cropData).then((url) => {
+  console.log('Cropped image uri', url);
+  // In case of Web, the `url` is the base64 string
 });
 ```
 
 ### `cropData: ImageCropData`
 
-| Name                            | Type                                            | Description                                                                                                                                                                                                  |
-| ------------------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `offset`                        | `{ x: number, y: number }`                      | The top-left corner of the cropped image, specified in the original image's coordinate space                                                                                                                 |
-| `size`                          | `{ width: number, height: number }`             | Size (dimensions) of the cropped image                                                                                                                                                                       |
-| `displaySize`<br>_(optional)_   | `{ width: number, height: number }`             | Size to which you want to scale the cropped image                                                                                                                                                            |
-| `resizeMode`<br>_(optional)_    | `'contain' \| 'cover' \| 'stretch' \| 'center'` | Resizing mode to use when scaling the image (iOS only, Android resize mode is always `'cover'`, Web - no support) <br/>**Default value**: `'cover'`                                                          |
-| `quality`<br>_(optional)_       | `number`                                        | A value in range `0.0` - `1.0` specifying compression level of the result image. `1` means no compression (highest quality) and `0` the highest compression (lowest quality) <br/>**Default value**: `0.9`   |
-| `format`<br>_(optional)_        | `'jpeg' \| 'png' \| 'webp'`                     | The format of the resulting image.<br/> **Default value**: based on the provided image;<br>if value determination is not possible, `'jpeg'` will be used as a fallback.<br/>`'webp'` isn't supported by iOS. |
-| `includeBase64`<br>_(optional)_ | `boolean`                                       | Indicates if Base64 formatted picture data should also be included in the [`CropResult`](#result-cropresult). <br/>**Default value**: `false`                                                                |
-| `headers`<br>_(optional)_       | `object \| Headers`                             | An object or [`Headers`](https://developer.mozilla.org/en-US/docs/Web/API/Headers) interface representing the HTTP headers to send along with the request for a remote image.                                |
+| Property      | Required | Description                                                                                                                                                                                                                                                                                                                                                                                    |
+| ------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `offset`      | Yes      | The top-left corner of the cropped image, specified in the original image's coordinate space                                                                                                                                                                                                                                                                                                   |
+| `size`        | Yes      | Size (dimensions) of the cropped image                                                                                                                                                                                                                                                                                                                                                         |
+| `displaySize` | No       | Size to which you want to scale the cropped image                                                                                                                                                                                                                                                                                                                                              |
+| `resizeMode`  | No       | Resizing mode to use when scaling the image (iOS only, Android resize mode is always 'cover', Web - no support) **Default value**: 'contain'                                                                                                                                                                                                                                                   |
+| `quality`     | No       | The quality of the resulting image, expressed as a value from `0.0` to `1.0`. <br/>The value `0.0` represents the maximum compression (or lowest quality) while the value `1.0` represents the least compression (or best quality).<br/>iOS supports only `JPEG` format, while Android/Web supports both `JPEG`, `WEBP` and `PNG` formats.<br/>**Default value**: (iOS: `1`), (Android: `0.9`) |
+| `format`      | No       | **(WEB ONLY)** The format of the resulting image, possible values are `jpeg`, `png`, `webp`, **Default value**: `jpeg`                                                                                                                                                                                                                                                                         |
 
-### `result: CropResult`
+```ts
+cropData: ImageCropData = {
+  offset: {x: number, y: number},
+  size: {width: number, height: number},
+  displaySize: {width: number, height: number},
+  resizeMode: 'contain' | 'cover' | 'stretch',
+  quality: number, // 0...1
+  format: 'jpeg' | 'png' | 'webp' // web only
+};
+```
 
-| Name                     | Type     | Description                                                                                                                                                                                    |
-| ------------------------ | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `uri`                    | `string` | The path to the image file (example: `'file:///data/user/0/.../image.jpg'`)<br> **WEB:** `uri` is the data URI string (example `'data:image/jpeg;base64,/4AAQ...AQABAA'`)                      |
-| `path`                   | `string` | The URI of the image (example: `'/data/user/0/.../image.jpg'`)<br> **WEB:** `path` is the blob URL (example `'blob:https://example.com/43ff7a16...e46b1'`)                                     |
-| `name`                   | `string` | The name of the image file. (example: `'image.jpg'`)                                                                                                                                           |
-| `width`                  | `number` | The width of the image in pixels                                                                                                                                                               |
-| `height`                 | `number` | Height of the image in pixels                                                                                                                                                                  |
-| `size`                   | `number` | The size of the image in bytes                                                                                                                                                                 |
-| `type`                   | `string` | The MIME type of the image (`'image/jpeg'`, `'image/png'`, `'image/webp'`)                                                                                                                     |
-| `base64`<br>_(optional)_ | `string` | The base64-encoded image data example: `'/9j/4AAQSkZJRgABAQAAAQABAAD'`<br>if you need data URI as the `source` for an `Image` element for example, you can use `data:${type};base64,${base64}` |
-
-For more advanced usage check our [example app](/example/src/App.tsx).
+For more advanced usage check our [example app](https://github.com/react-native-oh-library/RNOHDCS/tree/main/ImageEditorDemo).
 
 <!-- badges -->
 

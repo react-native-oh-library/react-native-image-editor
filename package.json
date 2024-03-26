@@ -1,7 +1,7 @@
 {
-  "name": "@react-native-community/image-editor",
-  "version": "4.2.0",
-  "description": "React Native Image Editing native modules for iOS & Android",
+  "name": "@react-native-oh-tpl/image-editor",
+  "version": "3.2.0",
+  "description": "React Native Image Editing native modules for iOS & Android & Harmony",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/src/index.d.ts",
@@ -13,11 +13,15 @@
   "bugs": {
     "url": "https://github.com/callstack/react-native-image-editor/issues"
   },
+  "harmony": {
+    "alias": "@react-native-community/image-editor"
+  },
   "license": "MIT",
   "keywords": [
     "react-native",
     "ios",
     "android",
+    "harmony",
     "react native",
     "image editor",
     "imageeditor",
@@ -25,13 +29,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/callstack/react-native-image-editor.git"
+    "url": "https://github.com/react-native-oh-library/react-native-image-editor.git"
   },
   "files": [
     "src",
     "lib",
     "android",
     "ios",
+    "harmony",
     "cpp",
     "*.podspec",
     "!ios/build",
@@ -40,7 +45,6 @@
     "!android/gradlew",
     "!android/gradlew.bat",
     "!android/local.properties",
-    "!**/__typetests__",
     "!**/__tests__",
     "!**/__fixtures__",
     "!**/__mocks__",
@@ -79,6 +83,9 @@
     "release-it": "^10.3.1",
     "typescript": "^5.2.2"
   },
+  "dependencies": {
+    "@react-native-community/image-editor": "3.2.0"
+},
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"

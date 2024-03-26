@@ -1,0 +1,9 @@
+{
+  "module": {
+    "name": "image_editor",
+    "type": "har",
+    "deviceTypes": [
+      'default'
+    ],
+  },
+}
