@@ -23,13 +23,13 @@
 #### **npm**
 
 ```bash
-npm install @react-native-oh-tpl/image-editor
+npm install @react-native-oh-tpl/image-editor@file:#
 ```
 
 #### **yarn**
 
 ```bash
-yarn add @react-native-oh-tpl/image-editor
+yarn add @react-native-oh-tpl/image-editor@file:#
 ```
 
 
@@ -68,7 +68,7 @@ ImageEditor.cropImage(uri, cropData).then((result) => {
 ```json
 "dependencies": {
     "rnoh": "file:../rnoh",
-    "rnoh-xxx": "file:../../node_modules/@react-native-oh-tpl/image-editor/harmony/image_editor.har"
+    "rnoh-image-editor": "file:../../node_modules/@react-native-oh-tpl/image-editor/harmony/image_editor.har"
   }
 ```
 
@@ -90,7 +90,7 @@ ohpm install
 ```json
 "dependencies": {
     "rnoh": "file:../rnoh",
-    "rnoh-xxx": "file:../../node_modules/@react-native-oh-tpl/image-editor/harmony/image_editor"
+    "rnoh-image-editor": "file:../../node_modules/@react-native-oh-tpl/image-editor/harmony/image_editor"
   }
 ```
 
@@ -101,7 +101,7 @@ cd entry
 ohpm install --no-link
 ```
 
-### 配置 CMakeLists 和引入 xxxPackge
+### 配置 CMakeLists 和引入ImageEditorPackage
 
 打开 `entry/src/main/cpp/CMakeLists.txt`，添加：
 
