@@ -22,7 +22,8 @@
  * SOFTWARE.
  */
 
-import { TurboModule } from 'rnoh/ts'
+import { TurboModule } from '@rnoh/react-native-openharmony/ts'
+import { TM } from "@rnoh/react-native-openharmony/generated/ts"
 import Logger from './Logger'
 import http from '@ohos.net.http'
 import ResponseCode from '@ohos.net.http'
@@ -259,7 +260,7 @@ async function TargetRect(newOptions: ImageCropData, resizeScaleSize?: size) {
   return targetRegion
 }
 
-export class ImageEditorModule extends TurboModule {
+export class ImageEditorModule extends TurboModule implements TM.RNCImageEditor.Spec {
   async cropImage(uri: string, options: ImageCropData): Promise<string>{
     const offset = options.offset
     const size = options.size

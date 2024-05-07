@@ -22,20 +22,21 @@
  * SOFTWARE.
  */
 
-import {RNPackage, TurboModulesFactory} from 'rnoh/ts';
-import type {TurboModule, TurboModuleContext} from 'rnoh/ts';
+import {RNPackage, TurboModulesFactory} from '@rnoh/react-native-openharmony/ts';
+import type {TurboModule, TurboModuleContext} from '@rnoh/react-native-openharmony/ts';
+import { TM } from "@rnoh/react-native-openharmony/generated/ts";
 import {ImageEditorModule} from './ImageEditorModule';
 
 class ImageEditorModulesFactory extends TurboModulesFactory {
   createTurboModule(name: string): TurboModule | null {
-    if (name === 'RNCImageEditor') {
+    if (name === TM.RNCImageEditor.NAME) {
       return new ImageEditorModule(this.ctx);
     }
     return null;
   }
 
   hasTurboModule(name: string): boolean {
-    return name === 'RNCImageEditor';
+    return name === TM.RNCImageEditor.NAME;
   }
 }
 
