@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-import { TurboModule } from 'rnoh/ts'
+import { TurboModule } from '@rnoh/react-native-openharmony/ts'
 import Logger from './Logger'
 import http from '@ohos.net.http'
 import ResponseCode from '@ohos.net.http'
