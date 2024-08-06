@@ -1,11 +1,11 @@
 {
   "name": "@react-native-oh-tpl/image-editor",
-  "version": "3.2.0-nc.0.1.1",
+  "version": "3.2.0-nc.0.1.2",
   "description": "Please describe the basic information.",
   "main": "index.ets",
   "author": "",
-  "license": "Apache-2.0",
+  "license": "MIT License",
   dependencies: {
-    rnoh: 'file:../rnoh'
+    "@rnoh/react-native-openharmony": "file:../react_native_openharmony"
   }
 }
