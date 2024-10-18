@@ -166,11 +166,10 @@ async function imageEditor(newOptions:ImageCropData, uri: string,uiContext:Conte
   await editorPM.getImageInfo().then((imageInfo: image.ImageInfo) => {
     getImageInfo = imageInfo
   })
-  let context = uiContext as common.ApplicationContext
   let suffix = newOptions.format
   suffix = suffix === 'jpeg' || suffix === 'jpg' ? 'jpeg' : suffix
   const fileName = `ReactNative_cropped_image_${new Date().getTime()}.${suffix==='jpeg'?'jpg':suffix}`
-  const path: string = `${context.cacheDir}/${fileName}`
+  const path: string = `${uiContext.cacheDir}/${fileName}`
   let packOpts: image.PackingOption = { format: `image/${suffix}`, quality: newOptions.quality || 90 }
   let size = 0
   let base64Data = ''
@@ -202,7 +201,7 @@ async function imageEditor(newOptions:ImageCropData, uri: string,uiContext:Conte
   editorPM.release()
   imageSourceApi.release()
   imagePackerApi.release()
-  context = null
+  uiContext = null
 
   const result:EditorResult = {
     uri: `file://${path}`,
