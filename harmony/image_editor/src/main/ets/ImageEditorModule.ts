@@ -34,6 +34,7 @@ import util from '@ohos.util'
 import fs from '@ohos.file.fs'
 import buffer from '@ohos.buffer'
 import common from '@ohos.app.ability.common'
+import { Context } from '@ohos.arkui.UIContext'
 
 interface size {
   width: number;
@@ -90,7 +91,7 @@ function loadHttp(uri: string)  {
   })
 }
 
-async function imageEditor(newOptions:ImageCropData, uri: string): Promise<EditorResult> {
+async function imageEditor(newOptions:ImageCropData, uri: string,uiContext:Context): Promise<EditorResult> {
   let imageData = null
   let openFile = null
   if(uri.startsWith("data:")){
@@ -166,11 +167,10 @@ async function imageEditor(newOptions:ImageCropData, uri: string): Promise<Edito
   await editorPM.getImageInfo().then((imageInfo: image.ImageInfo) => {
     getImageInfo = imageInfo
   })
-  let context = getContext(this) as common.ApplicationContext
   let suffix = newOptions.format
   suffix = suffix === 'jpeg' || suffix === 'jpg' ? 'jpeg' : suffix
   const fileName = `ReactNative_cropped_image_${new Date().getTime()}.${suffix==='jpeg'?'jpg':suffix}`
-  const path: string = `${context.cacheDir}/${fileName}`
+  const path: string = `${uiContext.cacheDir}/${fileName}`
   let packOpts: image.PackingOption = { format: `image/${suffix}`, quality: newOptions.quality || 90 }
   let size = 0
   let base64Data = ''
@@ -202,7 +202,7 @@ async function imageEditor(newOptions:ImageCropData, uri: string): Promise<Edito
   editorPM.release()
   imageSourceApi.release()
   imagePackerApi.release()
-  context = null
+  uiContext = null
 
   const result:EditorResult = {
     uri: `file://${path}`,
@@ -294,7 +294,7 @@ export class ImageEditorModule extends TurboModule implements TM.RNCImageEditor.
     }
     if(options.includeBase64) newOptions.includeBase64 = options.includeBase64
 
-    const fileUri: EditorResult = await imageEditor(newOptions, uri)
+    const fileUri: EditorResult = await imageEditor(newOptions, uri,this.ctx.uiAbilityContext)
     return fileUri.uri
   }
 }
